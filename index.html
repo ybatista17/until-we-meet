@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Until we're together</title>
+<meta name="description" content="A little countdown to the moment we're in the same place again." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-0:#0B0D1A;
+    --night-1:#161A33;
+    --lift:#20243F;
+    --amber:#F2C078;
+    --rose:#E99AA0;
+    --starlight:#F4EFE7;
+    --muted:#9AA0C0;
+    --hair:rgba(244,239,231,0.12);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html,body{height:100%}
+
+  body{
+    font-family:"Inter",system-ui,sans-serif;
+    color:var(--starlight);
+    background:var(--night-0);
+    min-height:100dvh;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  /* the night, with a warm glow at its heart — the two of us */
+  .sky{
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(120% 90% at 50% 42%, var(--lift) 0%, var(--night-1) 38%, var(--night-0) 78%);
+    z-index:0;
+  }
+  .warmth{
+    position:fixed;
+    left:50%;
+    top:40%;
+    width:min(70vw,640px);
+    height:min(70vw,640px);
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(242,192,120,0.18) 0%, rgba(233,154,160,0.08) 34%, transparent 66%);
+    filter:blur(8px);
+    z-index:0;
+    pointer-events:none;
+    transition:opacity 1.6s ease;
+  }
+
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+  /* content */
+  .stage{
+    position:relative;
+    z-index:2;
+    padding:32px 24px;
+    width:100%;
+    max-width:760px;
+  }
+
+  .eyebrow{
+    font-size:clamp(.62rem,2.4vw,.72rem);
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:500;
+    margin-bottom:26px;
+    padding-left:.42em;
+  }
+
+  /* signature: two stars, two warm hues, breathing toward each other */
+  .pair{
+    position:relative;
+    width:min(78vw,300px);
+    height:64px;
+    margin:0 auto 30px;
+  }
+  .pair .line{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:62%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--amber),var(--rose),transparent);
+    opacity:.45;
+    transition:opacity 1.2s ease;
+  }
+  .star{
+    position:absolute;
+    top:50%;
+    width:11px;height:11px;border-radius:50%;
+    transform:translateY(-50%);
+    transition:left 2.4s cubic-bezier(.5,0,.2,1), box-shadow 1.4s ease;
+  }
+  .star.a{
+    left:24%;
+    background:var(--amber);
+    box-shadow:0 0 10px 2px rgba(242,192,120,.7), 0 0 26px 6px rgba(242,192,120,.32);
+    animation:breatheA 6.5s ease-in-out infinite;
+  }
+  .star.b{
+    left:76%;
+    background:var(--rose);
+    box-shadow:0 0 10px 2px rgba(233,154,160,.7), 0 0 26px 6px rgba(233,154,160,.32);
+    animation:breatheB 6.5s ease-in-out infinite;
+  }
+  @keyframes breatheA{
+    0%,100%{transform:translateY(-50%) translateX(0)}
+    50%{transform:translateY(-50%) translateX(16px)}
+  }
+  @keyframes breatheB{
+    0%,100%{transform:translateY(-50%) translateX(0)}
+    50%{transform:translateY(-50%) translateX(-16px)}
+  }
+
+  h1{
+    font-family:"Fraunces",serif;
+    font-optical-sizing:auto;
+    font-weight:400;
+    font-size:clamp(1.9rem,6.4vw,3rem);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin-bottom:38px;
+  }
+  h1 em{font-style:italic;color:var(--amber)}
+
+  .clock{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:clamp(14px,5vw,40px);
+    margin-bottom:34px;
+  }
+  .unit{min-width:0}
+  .num{
+    font-family:"Fraunces",serif;
+    font-optical-sizing:auto;
+    font-weight:300;
+    font-variant-numeric:lining-nums tabular-nums;
+    font-size:clamp(2.9rem,15vw,6.4rem);
+    line-height:.95;
+    color:var(--starlight);
+  }
+  .lab{
+    margin-top:10px;
+    font-size:clamp(.56rem,2.2vw,.68rem);
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  .when{
+    font-family:"Fraunces",serif;
+    font-weight:400;
+    font-size:clamp(1rem,3.6vw,1.22rem);
+    color:var(--starlight);
+    margin-bottom:8px;
+  }
+  .where{
+    font-size:clamp(.72rem,2.6vw,.82rem);
+    color:var(--muted);
+    letter-spacing:.04em;
+  }
+
+  /* arrival messages — hidden until the countdown lands */
+  .arrival{display:none}
+  body.reunited .arrival{display:block;margin-bottom:6px}
+  .welcome{
+    font-family:"Fraunces",serif;
+    font-optical-sizing:auto;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.3rem,5.4vw,2.15rem);
+    line-height:1.1;
+    letter-spacing:-0.01em;
+    color:var(--amber);
+    margin-bottom:18px;
+    opacity:0;
+  }
+  .hug{
+    font-family:"Fraunces",serif;
+    font-optical-sizing:auto;
+    font-weight:400;
+    font-size:clamp(.92rem,3.6vw,1.32rem);
+    line-height:1.3;
+    color:var(--rose);
+    opacity:0;
+  }
+  body.reunited .welcome{animation:rise 1.6s ease-out .5s forwards}
+  body.reunited .hug{animation:rise 1.6s ease-out 1.6s forwards}
+  @keyframes rise{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* reunion state */
+  .bloom{
+    position:fixed;
+    left:50%;top:40%;
+    width:10px;height:10px;border-radius:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background:radial-gradient(circle, rgba(244,239,231,.95) 0%, rgba(242,192,120,.5) 40%, transparent 70%);
+    z-index:1;
+    pointer-events:none;
+  }
+  body.reunited .warmth{opacity:1}
+  body.reunited .star.a{left:50%;box-shadow:0 0 22px 8px rgba(242,192,120,.9), 0 0 60px 18px rgba(242,192,120,.4)}
+  body.reunited .star.b{left:50%;box-shadow:0 0 22px 8px rgba(233,154,160,.9), 0 0 60px 18px rgba(233,154,160,.4)}
+  body.reunited .pair .line{opacity:0}
+  body.reunited .pair .star{animation:none}
+  .bloom.go{animation:bloom 2.4s ease-out forwards}
+  @keyframes bloom{
+    0%{transform:translate(-50%,-50%) scale(0);opacity:.9}
+    70%{opacity:.6}
+    100%{transform:translate(-50%,-50%) scale(60);opacity:0}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .star.a,.star.b{animation:none !important}
+    .star{transition:none}
+    .bloom.go{animation:none;opacity:0}
+    body.reunited .welcome,body.reunited .hug{animation:none;opacity:1}
+  }
+</style>
+</head>
+<body>
+  <div class="sky"></div>
+  <div class="warmth"></div>
+  <canvas id="stars"></canvas>
+  <div class="bloom" id="bloom"></div>
+
+  <main class="stage">
+    <div class="eyebrow">until we're in the same place</div>
+
+    <div class="pair" aria-hidden="true">
+      <span class="line"></span>
+      <span class="star a"></span>
+      <span class="star b"></span>
+    </div>
+
+    <div class="arrival" id="arrival" aria-live="polite">
+      <div class="welcome">Bienvenida Guapa</div>
+      <div class="hug">Een heel grote knuffel &lt;3</div>
+    </div>
+
+    <div class="clock" id="clock" role="timer" aria-live="polite">
+      <div class="unit"><div class="num" id="d">00</div><div class="lab">days</div></div>
+      <div class="unit"><div class="num" id="h">00</div><div class="lab">hours</div></div>
+      <div class="unit"><div class="num" id="m">00</div><div class="lab">minutes</div></div>
+      <div class="unit"><div class="num" id="s">00</div><div class="lab">seconds</div></div>
+    </div>
+
+    <div class="when" id="when">Monday, August 24 · 6:35 PM</div>
+    <div class="where">New York time</div>
+  </main>
+
+<script>
+  // The exact moment, pinned to New York (EDT, −04:00).
+  // Stored as an absolute instant, so the countdown is correct in any timezone.
+  const TARGET = new Date('2026-08-24T18:35:00-04:00').getTime();
+
+  const elD = document.getElementById('d');
+  const elH = document.getElementById('h');
+  const elM = document.getElementById('m');
+  const elS = document.getElementById('s');
+  const pad = n => String(n).padStart(2,'0');
+
+  let reunited = false;
+  function reunite(){
+    if(reunited) return;
+    reunited = true;
+    document.body.classList.add('reunited');
+    document.getElementById('clock').style.display = 'none';
+    document.getElementById('when').style.display = 'none';
+    document.querySelector('.where').style.display = 'none';
+    const b = document.getElementById('bloom');
+    b.classList.add('go');
+  }
+
+  function tick(){
+    const diff = TARGET - Date.now();
+    if(diff <= 0){ reunite(); return; }
+    const s = Math.floor(diff/1000);
+    elD.textContent = pad(Math.floor(s/86400));
+    elH.textContent = pad(Math.floor((s%86400)/3600));
+    elM.textContent = pad(Math.floor((s%3600)/60));
+    elS.textContent = pad(s%60);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Ambient starfield
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function build(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    canvas.width = innerWidth*dpr;
+    canvas.height = innerHeight*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count = Math.round((innerWidth*innerHeight)/9000);
+    stars = Array.from({length:count}, () => ({
+      x:Math.random()*innerWidth,
+      y:Math.random()*innerHeight,
+      r:Math.random()*1.3+0.2,
+      base:Math.random()*0.5+0.2,
+      tw:Math.random()*Math.PI*2,
+      sp:Math.random()*0.7+0.3
+    }));
+  }
+  function draw(t){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for(const st of stars){
+      const a = reduce ? st.base : st.base + Math.sin(t*0.001*st.sp + st.tw)*0.28;
+      ctx.globalAlpha = Math.max(0, Math.min(1, a));
+      ctx.fillStyle = '#F4EFE7';
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  build();
+  if(reduce){ draw(0); } else { requestAnimationFrame(draw); }
+  addEventListener('resize', build);
+</script>
+</body>
+</html>
